@@ -27,8 +27,25 @@ unzip slogging-api.zip -x .gitignore
 rm slogging-api.zip
 ```
 
-## Dev
+## Run in local
 
 ```shell
 mvn spring-boot:run
+```
+
+## Build
+
+```shell
+# packaging executable jar file
+mvn clean package
+
+# check jar file
+ls -ltr target/slogging-api-*.jar
+```
+
+## Run in production
+
+*TODO*
+
+```shell
 ```
