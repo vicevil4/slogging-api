@@ -1,0 +1,16 @@
+package io.vicevil4.slogging.api.module.dto;
+
+import java.time.LocalDateTime;
+
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
+@RequiredArgsConstructor
+@Getter 
+@ToString(includeFieldNames = true)
+public class HealthDto {
+
+  private @NonNull LocalDateTime serverTime;
+}
