@@ -13,4 +13,10 @@ import lombok.ToString;
 public class HealthDto {
 
   private @NonNull LocalDateTime serverTime;
+
+  private @NonNull String gitBranch;
+  
+  private @NonNull String gitBuildVersion;
+
+  private @NonNull String gitCommitId;
 }
