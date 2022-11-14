@@ -28,4 +28,5 @@ public class BoardModel {
   public BoardModel(String boardName) {
     this.boardName = boardName;
   }
+
 }

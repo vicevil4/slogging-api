@@ -27,9 +27,14 @@ public class PostModel {
   @Column(name="POST_CONTENT", columnDefinition = "LONGTEXT", nullable=false)
   private String postContent;
 
+  @Column(name="POST_WRITER", length=100, nullable=false)
+  private String postWriter;
+
   @Builder
-  public PostModel(String postTitle, String postContent) {
+  public PostModel(String postTitle, String postContent, String postWriter) {
     this.postTitle = postTitle;
     this.postContent = postContent;
+    this.postWriter = postWriter;
   }
+  
 }
