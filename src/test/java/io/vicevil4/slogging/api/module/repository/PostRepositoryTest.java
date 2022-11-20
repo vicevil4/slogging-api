@@ -48,6 +48,25 @@ public class PostRepositoryTest {
     }
 
     @Test
+    void convertBooleanTest() {
+        // given
+        BoardModel savedBoard = prepareBoard(RandomString.make(5));
+        String postWriter = "홍길동";
+        PostModel post = PostModel.builder().postContent("내용입니다")
+                .postTitle("제목이에요")
+                .postWriter(postWriter)
+                .delYn(true)
+                .board(savedBoard).build();
+
+        // when
+        PostModel savedPost = postRepository.save(post);
+        log.info("savedPost {}", savedPost);
+
+        // then
+        Assertions.assertTrue(savedPost.isDelYn());
+    }
+
+    @Test
     void findAll() {
         // given
         BoardModel savedBoard = prepareBoard(RandomString.make(5));

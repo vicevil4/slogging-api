@@ -1,5 +1,7 @@
 package io.vicevil4.slogging.api.module.model;
 
+import io.vicevil4.slogging.api.module.model.base.BaseModel;
+import io.vicevil4.slogging.api.module.model.converter.BooleanYnConverter;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
@@ -14,8 +16,8 @@ import java.time.LocalDateTime;
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
-public class PostModel {
+@ToString(callSuper = true)
+public class PostModel extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,24 +33,22 @@ public class PostModel {
     @Column(name = "POST_WRITER", length = 100, nullable = false)
     private String postWriter;
 
-    @Column(name = "REG_DT", columnDefinition = "DATETIME")
-    @CreationTimestamp
-    private LocalDateTime regDt;
-
-    @Column(name = "UPD_DT", columnDefinition = "DATETIME")
-    @UpdateTimestamp
-    private LocalDateTime updDt;
+    @Convert(converter = BooleanYnConverter.class)
+    @Column(name = "DEL_YN", length = 1, nullable = false
+            , columnDefinition = "CHAR(1) DEFAULT 'N'")
+    private boolean delYn;
 
     @ManyToOne
     @JoinColumn(name = "BOARD_ID")
     private BoardModel board;
 
     @Builder
-    public PostModel(BoardModel board, String postTitle, String postContent, String postWriter) {
+    public PostModel(BoardModel board, String postTitle, String postContent, String postWriter, boolean delYn) {
         this.board = board;
         this.postTitle = postTitle;
         this.postContent = postContent;
         this.postWriter = postWriter;
+        this.delYn = delYn;
     }
 
 }

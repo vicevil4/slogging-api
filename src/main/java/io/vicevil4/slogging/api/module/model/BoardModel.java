@@ -1,5 +1,6 @@
 package io.vicevil4.slogging.api.module.model;
 
+import io.vicevil4.slogging.api.module.model.base.BaseModel;
 import io.vicevil4.slogging.api.module.model.converter.BooleanYnConverter;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,8 +16,8 @@ import java.time.LocalDateTime;
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
-public class BoardModel {
+@ToString(callSuper = true)
+public class BoardModel extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +31,6 @@ public class BoardModel {
     @Column(name = "DEL_YN", length = 1, nullable = false
             , columnDefinition = "CHAR(1) DEFAULT 'N'")
     private boolean delYn;
-
-    @Column(name = "REG_DT", columnDefinition = "DATETIME")
-    @CreationTimestamp
-    private LocalDateTime regDt;
-
-    @Column(name = "UPD_DT", columnDefinition = "DATETIME")
-    @UpdateTimestamp
-    private LocalDateTime updDt;
 
     @Builder
     public BoardModel(String boardName, boolean delYn) {
