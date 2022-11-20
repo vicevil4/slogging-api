@@ -31,11 +31,11 @@ public class BoardModel {
             , columnDefinition = "CHAR(1) DEFAULT 'N'")
     private boolean delYn;
 
-    @Column(name = "REG_DT", columnDefinition = "TIMESTAMP")
+    @Column(name = "REG_DT", columnDefinition = "DATETIME")
     @CreationTimestamp
     private LocalDateTime regDt;
 
-    @Column(name = "UPD_DT", columnDefinition = "TIMESTAMP")
+    @Column(name = "UPD_DT", columnDefinition = "DATETIME")
     @UpdateTimestamp
     private LocalDateTime updDt;
 

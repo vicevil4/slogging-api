@@ -31,11 +31,11 @@ public class PostModel {
     @Column(name = "POST_WRITER", length = 100, nullable = false)
     private String postWriter;
 
-    @Column(name = "REG_DT", columnDefinition = "TIMESTAMP")
+    @Column(name = "REG_DT", columnDefinition = "DATETIME")
     @CreationTimestamp
     private LocalDateTime regDt;
 
-    @Column(name = "UPD_DT", columnDefinition = "TIMESTAMP")
+    @Column(name = "UPD_DT", columnDefinition = "DATETIME")
     @UpdateTimestamp
     private LocalDateTime updDt;
 
