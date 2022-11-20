@@ -1,6 +1,5 @@
 package io.vicevil4.slogging.api.module.dto;
 
-import io.vicevil4.slogging.api.module.model.BoardModel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
