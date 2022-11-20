@@ -1,32 +1,49 @@
 package io.vicevil4.slogging.api.module.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import io.vicevil4.slogging.api.module.model.converter.BooleanYnConverter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TB_BOARD")
+@Getter
+@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class BoardModel {
-  
-  @Id
-  @GeneratedValue(strategy=GenerationType.IDENTITY)
-  @Column(name = "BOARD_ID")
-  private Long boardId;
 
-  @Column(name="BOARD_NAME", length=100, nullable=false)
-  private String boardName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "BOARD_ID")
+    private Long boardId;
 
-  @Builder
-  public BoardModel(String boardName) {
-    this.boardName = boardName;
-  }
+    @Column(name = "BOARD_NAME", length = 100, nullable = false)
+    private String boardName;
+
+    @Convert(converter = BooleanYnConverter.class)
+    @Column(name = "DEL_YN", length = 1, nullable = false
+            , columnDefinition = "CHAR(1) DEFAULT 'N'")
+    private boolean delYn;
+
+    @Column(name = "REG_DT")
+    @CreationTimestamp
+    private LocalDateTime regDt;
+
+    @Column(name = "UPD_DT")
+    @UpdateTimestamp
+    private LocalDateTime updDt;
+
+    @Builder
+    public BoardModel(String boardName, boolean delYn) {
+
+        this.boardName = boardName;
+        this.delYn = delYn;
+    }
 
 }
