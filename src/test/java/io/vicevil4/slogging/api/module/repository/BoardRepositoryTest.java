@@ -2,6 +2,7 @@ package io.vicevil4.slogging.api.module.repository;
 
 import io.vicevil4.slogging.api.module.model.BoardModel;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,13 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
+
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Slf4j
 public class BoardRepositoryTest {
 
     @Autowired
-    private BoardRepository boardRepository;
+    BoardRepository boardRepository;
 
     @Test
     void save() {
@@ -43,6 +46,23 @@ public class BoardRepositoryTest {
         log.info("savedBoard {}", savedBoard);
 
         // then
-        Assertions.assertEquals(true, savedBoard.isDelYn());
+        Assertions.assertTrue(savedBoard.isDelYn());
+    }
+
+    @Test
+    void findAll() {
+        // given
+        final int boardCount = 20;
+        for (int ii = 0; ii < boardCount; ii++) {
+            BoardModel board = BoardModel.builder().boardName(RandomString.make(100)).build();
+            boardRepository.save(board);
+        }
+
+        // when
+        List<BoardModel> boardList = boardRepository.findAll();
+        log.info("boardList {}", boardList);
+
+        // then
+        Assertions.assertEquals(boardCount, boardList.size());
     }
 }
