@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface BoardService {
 
-    BoardResponseDto createBoard(BoardRequestDto boardDto);
-
     List<BoardResponseDto> getBoardList();
+
+    BoardResponseDto getBoard();
+
+    BoardResponseDto createBoard(BoardRequestDto boardDto);
 
     BoardResponseDto updateBoard(BoardRequestDto boardDto);
 

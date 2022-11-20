@@ -12,26 +12,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/board")
 @Slf4j
 public class BoardController {
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/boards", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BoardResponseDto> getBoardList() {
         return ResponseEntity.ok(null);
     }
 
-    @RequestMapping(value = "/{boardId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/boards/{boardId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BoardResponseDto> getBoard() {
+        return ResponseEntity.ok(null);
+    }
+
+    @RequestMapping(value = "/boards", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BoardResponseDto> createBoard(BoardRequestDto boardDto) {
         return ResponseEntity.ok(null);
     }
 
-    @RequestMapping(value = "/{boardId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/boards/{boardId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BoardResponseDto> updateBoard(BoardRequestDto boardDto) {
         return ResponseEntity.ok(null);
     }
 
-    @RequestMapping(value = "/{boardId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/boards/{boardId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> deleteBoard(long boardId) {
         return ResponseEntity.ok(null);
     }

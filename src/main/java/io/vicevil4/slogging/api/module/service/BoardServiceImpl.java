@@ -14,14 +14,20 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService {
 
     @Override
-    public BoardResponseDto createBoard(BoardRequestDto boardDto) {
+    public List<BoardResponseDto> getBoardList() {
         return null;
     }
 
     @Override
-    public List<BoardResponseDto> getBoardList() {
+    public BoardResponseDto getBoard() {
         return null;
     }
+
+    @Override
+    public BoardResponseDto createBoard(BoardRequestDto boardDto) {
+        return null;
+    }
+
 
     @Override
     public BoardResponseDto updateBoard(BoardRequestDto boardDto) {
