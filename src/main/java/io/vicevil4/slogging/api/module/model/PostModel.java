@@ -1,14 +1,20 @@
 package io.vicevil4.slogging.api.module.model;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TB_POST")
+@Getter
+@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class PostModel {
 
     @Id
@@ -25,8 +31,21 @@ public class PostModel {
     @Column(name = "POST_WRITER", length = 100, nullable = false)
     private String postWriter;
 
+    @Column(name = "REG_DT", columnDefinition = "TIMESTAMP")
+    @CreationTimestamp
+    private LocalDateTime regDt;
+
+    @Column(name = "UPD_DT", columnDefinition = "TIMESTAMP")
+    @UpdateTimestamp
+    private LocalDateTime updDt;
+
+    @ManyToOne
+    @JoinColumn(name = "BOARD_ID")
+    private BoardModel board;
+
     @Builder
-    public PostModel(String postTitle, String postContent, String postWriter) {
+    public PostModel(BoardModel board, String postTitle, String postContent, String postWriter) {
+        this.board = board;
         this.postTitle = postTitle;
         this.postContent = postContent;
         this.postWriter = postWriter;
