@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TB_BOARD"
@@ -26,11 +27,13 @@ public class BoardModel extends BaseModel {
     private Long boardId;
 
     @Column(name = "BOARD_NAME", length = 100, nullable = false)
+    @NotNull
     private String boardName;
 
     @Convert(converter = BooleanYnConverter.class)
     @Column(name = "DEL_YN", length = 1, nullable = false
             , columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @NotNull
     private boolean delYn;
 
     @Builder

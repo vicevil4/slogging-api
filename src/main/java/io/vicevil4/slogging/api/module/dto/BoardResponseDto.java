@@ -1,21 +1,15 @@
 package io.vicevil4.slogging.api.module.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class BoardResponseDto {
 
-    private Long boardId;
-    private String boardName;
-
+    @Getter
     @Builder
-    public BoardResponseDto(String boardName) {
-        this.boardName = boardName;
+    @AllArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class CreateBoard {
+        private Long boardId;
+        private String boardName;
     }
 
 }

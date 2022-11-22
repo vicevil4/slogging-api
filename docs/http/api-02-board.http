@@ -1,0 +1,13 @@
+# api-02-board
+
+@baseurl = http://localhost:8080
+
+### 001-create-board
+POST {{baseurl}}/boards HTTP/1.1
+Content-Type: application/json; charset=UTF-8
+Accept: application/json
+
+{
+  "boardName": "FreeBoard"
+}
+

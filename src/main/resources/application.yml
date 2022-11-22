@@ -21,3 +21,8 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
+  jpa:
+    properties:
+      hibernate:
+        validator:
+          apply_to_ddl: false
