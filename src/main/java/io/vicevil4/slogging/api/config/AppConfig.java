@@ -7,13 +7,13 @@ import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 public class AppConfig {
-  
-	@Bean
-	public PropertySourcesPlaceholderConfigurer propsConfig() {
-		PropertySourcesPlaceholderConfigurer props = new PropertySourcesPlaceholderConfigurer();
-		props.setLocation(new ClassPathResource("git.properties"));
-		props.setIgnoreResourceNotFound(true);
-		props.setIgnoreUnresolvablePlaceholders(true);
-		return props;
-	}
+
+    @Bean
+    public PropertySourcesPlaceholderConfigurer propsConfig() {
+        PropertySourcesPlaceholderConfigurer props = new PropertySourcesPlaceholderConfigurer();
+        props.setLocation(new ClassPathResource("git.properties"));
+        props.setIgnoreResourceNotFound(true);
+        props.setIgnoreUnresolvablePlaceholders(true);
+        return props;
+    }
 }
