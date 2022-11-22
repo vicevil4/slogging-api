@@ -3,17 +3,18 @@ package io.vicevil4.slogging.api.module.model;
 import io.vicevil4.slogging.api.module.model.base.BaseModel;
 import io.vicevil4.slogging.api.module.model.converter.BooleanYnConverter;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "TB_BOARD")
-@Getter
+@Table(name = "TB_BOARD"
+        , uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"BOARD_NAME"})
+}
+)
 @DynamicInsert
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
