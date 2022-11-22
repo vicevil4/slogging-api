@@ -11,7 +11,7 @@ public interface BoardService {
 
     BoardResponseDto getBoard();
 
-    BoardResponseDto createBoard(BoardRequestDto boardDto);
+    BoardResponseDto.CreateBoard createBoard(BoardRequestDto.CreateBoard boardDto);
 
     BoardResponseDto updateBoard(BoardRequestDto boardDto);
 

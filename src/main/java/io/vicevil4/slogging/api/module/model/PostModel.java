@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,17 +26,21 @@ public class PostModel extends BaseModel {
     private Long postId;
 
     @Column(name = "POST_TITLE", length = 100, nullable = false)
+    @NotNull
     private String postTitle;
 
     @Column(name = "POST_CONTENT", columnDefinition = "LONGTEXT", nullable = false)
+    @NotNull
     private String postContent;
 
     @Column(name = "POST_WRITER", length = 100, nullable = false)
+    @NotNull
     private String postWriter;
 
     @Convert(converter = BooleanYnConverter.class)
     @Column(name = "DEL_YN", length = 1, nullable = false
             , columnDefinition = "CHAR(1) DEFAULT 'N'")
+    @NotNull
     private boolean delYn;
 
     @ManyToOne
