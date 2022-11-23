@@ -9,6 +9,14 @@ public class BoardRequestDto {
 
     @Getter
     @Setter
+    public static class GetBoards {
+
+        private String boardName;
+
+    }
+
+    @Getter
+    @Setter
     public static class CreateBoard {
 
         @NotNull

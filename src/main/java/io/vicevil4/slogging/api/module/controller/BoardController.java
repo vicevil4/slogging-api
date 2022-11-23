@@ -5,6 +5,9 @@ import io.vicevil4.slogging.api.module.dto.BoardResponseDto;
 import io.vicevil4.slogging.api.module.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +25,9 @@ public class BoardController {
     private final BoardService boardService;
 
     @RequestMapping(value = "/boards", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BoardResponseDto> getBoardList() {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<BoardResponseDto.BoardList> getBoardList(@Valid @RequestBody BoardRequestDto.GetBoards boardDto
+            , @PageableDefault(size = 20, sort = {"boardId"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(boardService.getBoardList(boardDto, pageable));
     }
 
     @RequestMapping(value = "/boards/{boardId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,7 +36,7 @@ public class BoardController {
     }
 
     @RequestMapping(value = "/boards", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BoardResponseDto.CreateBoard> createBoard(@Valid @RequestBody BoardRequestDto.CreateBoard boardDto) {
+    public ResponseEntity<BoardResponseDto.Board> createBoard(@Valid @RequestBody BoardRequestDto.CreateBoard boardDto) {
         // TODO handling invalid parameter exception
         return ResponseEntity.ok(boardService.createBoard(boardDto));
     }

@@ -2,16 +2,15 @@ package io.vicevil4.slogging.api.module.service;
 
 import io.vicevil4.slogging.api.module.dto.BoardRequestDto;
 import io.vicevil4.slogging.api.module.dto.BoardResponseDto;
-
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 public interface BoardService {
 
-    List<BoardResponseDto> getBoardList();
+    BoardResponseDto.BoardList getBoardList(BoardRequestDto.GetBoards boardDto, Pageable pageable);
 
     BoardResponseDto getBoard();
 
-    BoardResponseDto.CreateBoard createBoard(BoardRequestDto.CreateBoard boardDto);
+    BoardResponseDto.Board createBoard(BoardRequestDto.CreateBoard boardDto);
 
     BoardResponseDto updateBoard(BoardRequestDto boardDto);
 

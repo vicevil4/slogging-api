@@ -11,3 +11,15 @@ Accept: application/json
   "boardName": "FreeBoard"
 }
 
+### 002-get-boards
+GET {{baseurl}}/boards HTTP/1.1
+Content-Type: application/json; charset=UTF-8
+Accept: application/json
+
+{
+  "boardName": "FreeBoard",
+  "page": 0,
+  "size": 10,
+  "sort": "boardId,desc"
+}
+
