@@ -26,7 +26,9 @@ public class BoardController {
 
     @RequestMapping(value = "/boards", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BoardResponseDto.BoardList> getBoardList(@Valid @RequestBody BoardRequestDto.GetBoards boardDto
-            , @PageableDefault(size = 20, sort = {"boardId"}, direction = Sort.Direction.DESC) Pageable pageable) {
+            , @PageableDefault(size = 10, sort = {"boardId"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        // TODO 페이징,정렬의 기본값 설정 검토
+        // TODO 파라미터 옵션검색
         return ResponseEntity.ok(boardService.getBoardList(boardDto, pageable));
     }
 

@@ -17,9 +17,9 @@ Content-Type: application/json; charset=UTF-8
 Accept: application/json
 
 {
-  "boardName": "FreeBoard",
-  "page": 0,
-  "size": 10,
-  "sort": "boardId,desc"
+  "boardName": "Board1",
+  "page": 1,
+  "size": 5
 }
 
+# TODO 페이지 옵션이 전혀 안먹힌다. 확인하자

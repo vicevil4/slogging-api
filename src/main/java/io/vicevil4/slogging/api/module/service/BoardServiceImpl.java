@@ -22,8 +22,8 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardResponseDto.BoardList getBoardList(BoardRequestDto.GetBoards boardDto, Pageable pageable) {
 
-        // TODO 여러옵션으로 검색을 어떻게 하지?
-        Page<BoardModel> list = boardRepository.findAllByBoardNameAndDelYn(boardDto.getBoardName(), false, pageable);
+        // TODO 검색 파라미터가 옵션인 경우 및 검색어 포함여부 등 다양하게 하려면?
+        Page<BoardModel> list = boardRepository.findAll(pageable);
         Page<BoardResponseDto.Board> result = list.map(BoardResponseDto.Board::fromEntity);
         return BoardResponseDto.BoardList.builder()
                 .list(result)
