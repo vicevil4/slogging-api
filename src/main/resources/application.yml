@@ -8,6 +8,7 @@ logging:
     path: ./logs
   level:
     root: INFO
+    org.hibernate.SQL: DEBUG
     io.vicevil4.slogging: DEBUG
 
 spring:
@@ -21,8 +22,15 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
+  data:
+    web:
+      pageable:
+        default-page-size: 20
+        max-page-size: 100
   jpa:
+    show-sql: true
     properties:
       hibernate:
+        format_sql: true
         validator:
           apply_to_ddl: false

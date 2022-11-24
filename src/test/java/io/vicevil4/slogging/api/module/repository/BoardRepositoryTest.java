@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -64,5 +66,24 @@ public class BoardRepositoryTest {
 
         // then
         Assertions.assertEquals(boardCount, boardList.size());
+    }
+
+    @Test
+    void findAllByBoardNameStartsWithAndDelYn() {
+        // given
+        String boardName = "FreeBoard";
+        BoardModel board = BoardModel.builder().boardName(boardName).build();
+        boardRepository.save(board);
+
+        // when
+        Page<BoardModel> list = boardRepository.findAllByBoardNameStartsWithAndDelYn(
+                boardName
+                , false
+                , PageRequest.of(0, 10)
+        );
+        log.info("list {}", list.getTotalElements());
+
+        // then
+        Assertions.assertEquals(1L, list.getTotalElements());
     }
 }

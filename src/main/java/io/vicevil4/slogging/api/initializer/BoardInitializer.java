@@ -17,5 +17,15 @@ public class BoardInitializer implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         boardRepository.save(BoardModel.builder().boardName("FreeBoard").build());
         boardRepository.save(BoardModel.builder().boardName("Notice").build());
+        boardRepository.save(BoardModel.builder().boardName("Board1").build());
+        boardRepository.save(BoardModel.builder().boardName("Board2").build());
+        boardRepository.save(BoardModel.builder().boardName("Board3").build());
+        boardRepository.save(BoardModel.builder().boardName("Board4").build());
+        boardRepository.save(BoardModel.builder().boardName("Board5").build());
+        boardRepository.save(BoardModel.builder().boardName("Board6").build());
+        boardRepository.save(BoardModel.builder().boardName("Board7").build());
+        boardRepository.save(BoardModel.builder().boardName("Board8").build());
+        boardRepository.save(BoardModel.builder().boardName("Board9").build());
+        boardRepository.save(BoardModel.builder().boardName("Board10").build());
     }
 }

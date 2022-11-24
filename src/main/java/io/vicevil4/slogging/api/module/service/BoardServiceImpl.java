@@ -6,10 +6,11 @@ import io.vicevil4.slogging.api.module.model.BoardModel;
 import io.vicevil4.slogging.api.module.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +20,16 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
 
     @Override
-    public List<BoardResponseDto> getBoardList() {
-        return null;
+    public BoardResponseDto.BoardList getBoardList(BoardRequestDto.GetBoards boardDto, Pageable pageable) {
+
+        Page<BoardModel> list = boardRepository.findAllByBoardNameStartsWithAndDelYn(
+                boardDto.getBoardName()
+                , false
+                , pageable);
+        Page<BoardResponseDto.Board> result = list.map(BoardResponseDto.Board::fromEntity);
+        return BoardResponseDto.BoardList.builder()
+                .list(result)
+                .build();
     }
 
     @Override
@@ -28,13 +37,14 @@ public class BoardServiceImpl implements BoardService {
         return null;
     }
 
+    @Transactional
     @Override
-    public BoardResponseDto.CreateBoard createBoard(BoardRequestDto.CreateBoard boardDto) {
+    public BoardResponseDto.Board createBoard(BoardRequestDto.CreateBoard boardDto) {
 
         BoardModel board = boardRepository.findByBoardName(boardDto.getBoardName())
                 .orElseGet(() -> boardRepository.save(boardDto.toEntity()));
 
-        return BoardResponseDto.CreateBoard.builder()
+        return BoardResponseDto.Board.builder()
                 .boardId(board.getBoardId())
                 .boardName(board.getBoardName())
                 .build();
