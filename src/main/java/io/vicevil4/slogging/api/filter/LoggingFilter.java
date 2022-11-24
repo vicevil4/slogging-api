@@ -20,7 +20,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
-@Component
+// TODO h2-console 기능이 동작안하는 문제가 발생해서 확인 후 넣어주자.
+//@Component
 @Slf4j
 public class LoggingFilter extends OncePerRequestFilter {
 

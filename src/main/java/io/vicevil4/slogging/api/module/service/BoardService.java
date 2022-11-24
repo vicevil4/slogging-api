@@ -8,11 +8,11 @@ public interface BoardService {
 
     BoardResponseDto.BoardList getBoardList(BoardRequestDto.GetBoards boardDto, Pageable pageable);
 
-    BoardResponseDto.Board getBoard(Long boardId);
+    BoardResponseDto.Board getBoard(long boardId);
 
     BoardResponseDto.Board createBoard(BoardRequestDto.CreateBoard boardDto);
 
-    BoardResponseDto.Board updateBoard(Long boardId, BoardRequestDto.UpdateBoard boardDto);
+    BoardResponseDto.Board updateBoard(long boardId, BoardRequestDto.UpdateBoard boardDto);
 
-    boolean deleteBoard(long boardId);
+    void deleteBoard(long boardId);
 }
