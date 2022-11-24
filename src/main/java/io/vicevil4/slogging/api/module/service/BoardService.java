@@ -8,7 +8,7 @@ public interface BoardService {
 
     BoardResponseDto.BoardList getBoardList(BoardRequestDto.GetBoards boardDto, Pageable pageable);
 
-    BoardResponseDto getBoard();
+    BoardResponseDto.Board getBoard(Long boardId);
 
     BoardResponseDto.Board createBoard(BoardRequestDto.CreateBoard boardDto);
 

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +34,15 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardResponseDto getBoard() {
-        return null;
+    public BoardResponseDto.Board getBoard(Long boardId) {
+
+        BoardModel board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("Not found Board."));
+
+        return BoardResponseDto.Board.builder()
+                .boardId(board.getBoardId())
+                .boardName(board.getBoardName())
+                .build();
     }
 
     @Transactional

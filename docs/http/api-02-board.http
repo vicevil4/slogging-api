@@ -32,3 +32,18 @@ Accept: application/json
 GET {{baseurl}}/boards
   ?boardName=Board1 HTTP/1.1
 Accept: application/json
+
+
+### 003-get-board
+GET {{baseurl}}/boards/1 HTTP/1.1
+Accept: application/json
+
+
+### 003-get-board not found board
+GET {{baseurl}}/boards/999 HTTP/1.1
+Accept: application/json
+
+
+### 003-get-board invalid param
+GET {{baseurl}}/boards/xxx HTTP/1.1
+Accept: application/json
