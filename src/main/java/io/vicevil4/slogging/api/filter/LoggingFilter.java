@@ -63,9 +63,10 @@ public class LoggingFilter extends OncePerRequestFilter {
 
         String queryString = requestWrapper.getQueryString();
         String headerString = getHeaders(requestWrapper);
-        log.info("Request {} {} {} Header: {}",
+        log.info("Request {} {}{} {} Header: {}",
                 requestWrapper.getMethod()
-                , null == queryString ? requestWrapper.getRequestURI() : requestWrapper.getRequestURI() + queryString
+                , requestWrapper.getRequestURI()
+                , null != queryString ? "?" + queryString : ""
                 , requestWrapper.getProtocol()
                 , headerString
         );
