@@ -29,5 +29,20 @@ public class BoardRequestDto {
         }
     }
 
+    @Getter
+    @Setter
+    @ToString
+    public static class UpdateBoard {
 
+        @NotNull
+        private String boardName;
+
+        public BoardModel toEntity(BoardModel board) {
+            return BoardModel.builder()
+                    .boardId(board.getBoardId())
+                    .delYn(board.isDelYn())
+                    .boardName(boardName)
+                    .build();
+        }
+    }
 }

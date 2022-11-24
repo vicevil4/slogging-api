@@ -12,7 +12,7 @@ public interface BoardService {
 
     BoardResponseDto.Board createBoard(BoardRequestDto.CreateBoard boardDto);
 
-    BoardResponseDto updateBoard(BoardRequestDto boardDto);
+    BoardResponseDto.Board updateBoard(Long boardId, BoardRequestDto.UpdateBoard boardDto);
 
     boolean deleteBoard(long boardId);
 }
