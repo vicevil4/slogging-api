@@ -12,14 +12,23 @@ Accept: application/json
 }
 
 ### 002-get-boards
-GET {{baseurl}}/boards HTTP/1.1
-Content-Type: application/json; charset=UTF-8
+GET {{baseurl}}/boards
+  ?page=0&size=5&boardName=Board1 HTTP/1.1
 Accept: application/json
 
-{
-  "boardName": "Board1",
-  "page": 1,
-  "size": 5
-}
 
-# TODO 페이지 옵션이 전혀 안먹힌다. 확인하자
+### 002-get-boards default pageable
+GET {{baseurl}}/boards HTTP/1.1
+Accept: application/json
+
+
+### 002-get-boards pageable sort
+GET {{baseurl}}/boards
+  ?page=0&size=5&boardName=Board1&sort=boardId,asc HTTP/1.1
+Accept: application/json
+
+
+### 002-get-boards search boardName
+GET {{baseurl}}/boards
+  ?boardName=Board1 HTTP/1.1
+Accept: application/json

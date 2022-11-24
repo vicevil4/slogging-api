@@ -5,7 +5,7 @@
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <withJansi>true</withJansi>
     <encoder>
-      <pattern>%black(%d{yyyy-MM-dd HH:mm:ss.SSS}) %highlight([%-5level]) %green({%thread}) trace_id=%X{trace_id} %magenta(%C{1}.%M[%file:%line]) - %msg %n</pattern>
+      <pattern>%black(%d{yyyy-MM-dd HH:mm:ss.SSS}) %highlight([%-5level]) %green({%thread}) tracdId=%X{tracdId} %magenta(%C{1}.%M[%file:%line]) - %msg %n</pattern>
     </encoder>
   </appender>
 
@@ -19,7 +19,7 @@
       <maxHistory>10</maxHistory>
     </rollingPolicy>
     <encoder>
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] {%thread} trace_id=%X{trace_id} %C{1}.%M[%file:%line] - %msg %n</pattern>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] {%thread} tracdId=%X{tracdId} %C{1}.%M[%file:%line] - %msg %n</pattern>
     </encoder>
   </appender>
 
@@ -38,7 +38,7 @@
       <maxHistory>30</maxHistory>
     </rollingPolicy>
     <encoder>
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] {%thread} trace_id=%X{trace_id} %C{1}.%M[%file:%line] - %msg %n</pattern>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] {%thread} tracdId=%X{tracdId} %C{1}.%M[%file:%line] - %msg %n</pattern>
     </encoder>
   </appender>
 
