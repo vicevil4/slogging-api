@@ -86,4 +86,19 @@ public class BoardRepositoryTest {
         // then
         Assertions.assertEquals(1L, list.getTotalElements());
     }
+
+    @Test
+    void deleteBoard() {
+        // given
+        String boardName = "FreeBoard";
+        BoardModel board = BoardModel.builder().boardName(boardName).build();
+        boardRepository.save(board);
+
+        // when
+        int affected = boardRepository.deleteBoard(board.getBoardId());
+        log.info("affected {}", affected);
+
+        // then
+        Assertions.assertEquals(1L, affected);
+    }
 }

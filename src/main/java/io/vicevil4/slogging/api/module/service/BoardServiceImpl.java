@@ -33,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardResponseDto.Board getBoard(Long boardId) {
+    public BoardResponseDto.Board getBoard(long boardId) {
 
         BoardModel board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("Not found Board."));
@@ -59,7 +59,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     @Override
-    public BoardResponseDto.Board updateBoard(Long boardId, BoardRequestDto.UpdateBoard boardDto) {
+    public BoardResponseDto.Board updateBoard(long boardId, BoardRequestDto.UpdateBoard boardDto) {
 
         BoardModel board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("Not found Board."));
@@ -71,8 +71,13 @@ public class BoardServiceImpl implements BoardService {
                 .build();
     }
 
+    @Transactional
     @Override
-    public boolean deleteBoard(long boardId) {
-        return false;
+    public void deleteBoard(long boardId) {
+
+        BoardModel board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("Not found Board."));
+
+        boardRepository.deleteBoard(board.getBoardId());
     }
 }

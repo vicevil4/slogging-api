@@ -48,8 +48,9 @@ public class BoardController {
         return ResponseEntity.ok(boardService.updateBoard(Long.valueOf(boardId), boardDto));
     }
 
-    @RequestMapping(value = "/boards/{boardId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> deleteBoard(long boardId) {
+    @RequestMapping(value = "/boards/{boardId:[0-9]+}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> deleteBoard(@PathVariable("boardId") String boardId) {
+        boardService.deleteBoard(Long.valueOf(boardId));
         return ResponseEntity.ok(null);
     }
 }
