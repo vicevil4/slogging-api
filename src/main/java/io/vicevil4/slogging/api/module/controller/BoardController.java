@@ -10,10 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -32,9 +29,9 @@ public class BoardController {
         return ResponseEntity.ok(boardService.getBoardList(boardDto, pageable));
     }
 
-    @RequestMapping(value = "/boards/{boardId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BoardResponseDto> getBoard() {
-        return ResponseEntity.ok(null);
+    @RequestMapping(value = "/boards/{boardId:[0-9]+}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BoardResponseDto.Board> getBoard(@PathVariable("boardId") String boardId) {
+        return ResponseEntity.ok(boardService.getBoard(Long.valueOf(boardId)));
     }
 
     @RequestMapping(value = "/boards", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
