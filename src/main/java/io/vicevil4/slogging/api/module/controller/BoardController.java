@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+// TODO handling invalid parameter exception
+// TODO global error handling
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -36,13 +39,13 @@ public class BoardController {
 
     @RequestMapping(value = "/boards", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BoardResponseDto.Board> createBoard(@Valid @RequestBody BoardRequestDto.CreateBoard boardDto) {
-        // TODO handling invalid parameter exception
         return ResponseEntity.ok(boardService.createBoard(boardDto));
     }
 
-    @RequestMapping(value = "/boards/{boardId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BoardResponseDto> updateBoard(BoardRequestDto boardDto) {
-        return ResponseEntity.ok(null);
+    @RequestMapping(value = "/boards/{boardId:[0-9]+}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BoardResponseDto.Board> updateBoard(@PathVariable("boardId") String boardId
+            , @Valid @RequestBody BoardRequestDto.UpdateBoard boardDto) {
+        return ResponseEntity.ok(boardService.updateBoard(Long.valueOf(boardId), boardDto));
     }
 
     @RequestMapping(value = "/boards/{boardId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)

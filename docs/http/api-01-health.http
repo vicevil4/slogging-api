@@ -2,7 +2,7 @@
 
 @baseurl = http://localhost:8080
 
-### 001-health-status
+### 01-health-status
 GET {{baseurl}}/health/status HTTP/1.1
 Accept: application/json
 

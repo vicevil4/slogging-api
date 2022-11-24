@@ -17,7 +17,6 @@ import javax.validation.constraints.NotNull;
 @DynamicInsert
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
 public class BoardModel extends BaseModel {
 
@@ -37,8 +36,9 @@ public class BoardModel extends BaseModel {
     private boolean delYn;
 
     @Builder
-    public BoardModel(String boardName, boolean delYn) {
+    public BoardModel(Long boardId, String boardName, boolean delYn) {
 
+        this.boardId = boardId;
         this.boardName = boardName;
         this.delYn = delYn;
     }

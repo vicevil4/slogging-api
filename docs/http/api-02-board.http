@@ -2,7 +2,7 @@
 
 @baseurl = http://localhost:8080
 
-### 001-create-board
+### 01-create-board
 POST {{baseurl}}/boards HTTP/1.1
 Content-Type: application/json; charset=UTF-8
 Accept: application/json
@@ -11,39 +11,49 @@ Accept: application/json
   "boardName": "FreeBoard"
 }
 
-### 002-get-boards
+### 02-get-boards
 GET {{baseurl}}/boards
   ?page=0&size=5&boardName=Board1 HTTP/1.1
 Accept: application/json
 
 
-### 002-get-boards default pageable
+### 02-get-boards default pageable
 GET {{baseurl}}/boards HTTP/1.1
 Accept: application/json
 
 
-### 002-get-boards pageable sort
+### 02-get-boards pageable sort
 GET {{baseurl}}/boards
   ?page=0&size=5&boardName=Board1&sort=boardId,asc HTTP/1.1
 Accept: application/json
 
 
-### 002-get-boards search boardName
+### 02-get-boards search boardName
 GET {{baseurl}}/boards
   ?boardName=Board1 HTTP/1.1
 Accept: application/json
 
 
-### 003-get-board
+### 03-get-board
 GET {{baseurl}}/boards/1 HTTP/1.1
 Accept: application/json
 
 
-### 003-get-board not found board
+### 03-get-board not found board
 GET {{baseurl}}/boards/999 HTTP/1.1
 Accept: application/json
 
 
-### 003-get-board invalid param
+### 03-get-board invalid param
 GET {{baseurl}}/boards/xxx HTTP/1.1
 Accept: application/json
+
+
+### 04-update-board
+PUT {{baseurl}}/boards/1 HTTP/1.1
+Content-Type: application/json; charset=UTF-8
+Accept: application/json
+
+{
+  "boardName": "FreeBoard Modify2"
+}

@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -58,10 +57,18 @@ public class BoardServiceImpl implements BoardService {
                 .build();
     }
 
-
+    @Transactional
     @Override
-    public BoardResponseDto updateBoard(BoardRequestDto boardDto) {
-        return null;
+    public BoardResponseDto.Board updateBoard(Long boardId, BoardRequestDto.UpdateBoard boardDto) {
+
+        BoardModel board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("Not found Board."));
+
+        BoardModel savedBoard = boardRepository.save(boardDto.toEntity(board));
+        return BoardResponseDto.Board.builder()
+                .boardId(savedBoard.getBoardId())
+                .boardName(savedBoard.getBoardName())
+                .build();
     }
 
     @Override
