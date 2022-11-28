@@ -4,6 +4,7 @@ import io.vicevil4.slogging.api.filter.internal.RequestWrapper;
 import io.vicevil4.slogging.api.filter.internal.ResponseWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
@@ -14,25 +15,24 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
-// TODO h2-console 기능이 동작안하는 문제가 발생해서 확인 후 넣어주자.
-//@Component
+@Order(0)
+@Component
 @Slf4j
 public class LoggingFilter extends OncePerRequestFilter {
 
     private final static List<MediaType> LOGGING_MEDIA_TYPES = Arrays.asList(
-            MediaType.valueOf("text/*")
-            , MediaType.APPLICATION_FORM_URLENCODED
+            MediaType.APPLICATION_FORM_URLENCODED
             , MediaType.APPLICATION_JSON
-            , MediaType.APPLICATION_XML
-            , MediaType.valueOf("application/*+json")
-            , MediaType.valueOf("application/*+xml")
-            , MediaType.MULTIPART_FORM_DATA
+//            , MediaType.APPLICATION_XML
+//            , MediaType.valueOf("text/*")
+//            , MediaType.valueOf("application/*+json")
+//            , MediaType.valueOf("application/*+xml")
+//            , MediaType.MULTIPART_FORM_DATA
     );
 
     @Override
@@ -40,27 +40,20 @@ public class LoggingFilter extends OncePerRequestFilter {
 
         MDC.put("traceId", UUID.randomUUID().toString());
 
-        if (isAsyncDispatch(request)) {
-            filterChain.doFilter(request, response);
-        } else {
-            doFilterWrapped(new RequestWrapper(request), new ResponseWrapper(response), filterChain);
-        }
+        RequestWrapper requestWrapper = new RequestWrapper(request);
+        ResponseWrapper responseWrapper = new ResponseWrapper(response);
+
+        loggingRequest(requestWrapper);
+
+        filterChain.doFilter(requestWrapper, responseWrapper);
+
+        loggingResponse(responseWrapper);
+        responseWrapper.copyBodyToResponse();
 
         MDC.clear();
     }
 
-    private void doFilterWrapped(RequestWrapper requestWrapper, ResponseWrapper responseWrapper, FilterChain filterChain) throws IOException, ServletException {
-
-        try {
-            loggingRequest(requestWrapper);
-            filterChain.doFilter(requestWrapper, responseWrapper);
-        } finally {
-            loggingResponse(responseWrapper);
-            responseWrapper.copyBodyToResponse();
-        }
-    }
-
-    private void loggingRequest(RequestWrapper requestWrapper) throws IOException {
+    private void loggingRequest(RequestWrapper requestWrapper) {
 
         String queryString = requestWrapper.getQueryString();
         String headerString = getHeaders(requestWrapper);
@@ -72,7 +65,15 @@ public class LoggingFilter extends OncePerRequestFilter {
                 , headerString
         );
 
-        loggingPayload("Request", requestWrapper.getContentType(), requestWrapper.getInputStream());
+        if (isLoggingAvailable(requestWrapper.getContentType())) {
+            byte[] content = requestWrapper.getContentAsByteArray();
+            if (content.length > 0) {
+                String contentString = new String(content);
+                log.info("Request Payload={}", contentString);
+            }
+        } else {
+            log.debug("Request Payload is Binary Content.");
+        }
     }
 
     private String getHeaders(RequestWrapper requestWrapper) {
@@ -89,23 +90,20 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
 
     private void loggingResponse(ResponseWrapper responseWrapper) throws IOException {
-
-        loggingPayload("Response", responseWrapper.getContentType(), responseWrapper.getContentInputStream());
-    }
-
-    private void loggingPayload(String prefix, String contentType, InputStream contentInputStream) throws IOException {
-
-        boolean available = LOGGING_MEDIA_TYPES.stream()
-                .anyMatch(type -> type.includes(MediaType.valueOf(null == contentType ? "application/json" : contentType)));
-        if (available) {
-            byte[] content = StreamUtils.copyToByteArray(contentInputStream);
+        if (isLoggingAvailable(responseWrapper.getContentType())) {
+            byte[] content = StreamUtils.copyToByteArray(responseWrapper.getContentInputStream());
             if (content.length > 0) {
                 String contentString = new String(content);
-                log.info("{} Payload={}", prefix, contentString);
+                log.info("Response Payload={}", contentString);
             }
         } else {
-            log.info("{} Payload is Binary Content.", prefix);
+            log.debug("Response Payload is Binary Content.");
         }
+    }
+
+    private boolean isLoggingAvailable(String contentType) {
+        return LOGGING_MEDIA_TYPES.stream()
+                .anyMatch(type -> type.includes(MediaType.valueOf(null == contentType ? "application/json" : contentType)));
     }
 
 }
