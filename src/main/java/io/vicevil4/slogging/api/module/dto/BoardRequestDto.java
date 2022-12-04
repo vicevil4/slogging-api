@@ -1,6 +1,7 @@
 package io.vicevil4.slogging.api.module.dto;
 
 import io.vicevil4.slogging.api.module.model.BoardModel;
+import io.vicevil4.slogging.api.module.model.PostModel;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -42,6 +43,30 @@ public class BoardRequestDto {
                     .boardId(board.getBoardId())
                     .delYn(board.isDelYn())
                     .boardName(boardName)
+                    .build();
+        }
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class CreatePost {
+
+        @NotNull
+        private String postTitle;
+
+        @NotNull
+        private String postContent;
+
+        @NotNull
+        private String postWriter;
+
+
+        public PostModel toEntity(BoardModel board) {
+            return PostModel.builder().postTitle(postTitle)
+                    .postContent(postContent)
+                    .postWriter(postWriter)
+                    .board(board)
                     .build();
         }
     }
