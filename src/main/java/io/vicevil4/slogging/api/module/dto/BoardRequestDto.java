@@ -62,11 +62,11 @@ public class BoardRequestDto {
         private String postWriter;
 
 
-        public PostModel toEntity(Long boardId) {
+        public PostModel toEntity(BoardModel board) {
             return PostModel.builder().postTitle(postTitle)
                     .postContent(postContent)
                     .postWriter(postWriter)
-                    .board(BoardModel.builder().boardId(boardId).build())
+                    .board(board)
                     .build();
         }
     }

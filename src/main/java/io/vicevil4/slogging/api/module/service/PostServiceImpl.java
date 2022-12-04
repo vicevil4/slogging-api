@@ -20,14 +20,18 @@ import java.util.Optional;
 @Slf4j
 public class PostServiceImpl implements PostService {
 
+    private final BoardRepository boardRepository;
     private final PostRepository postRepository;
 
     @Transactional
     @Override
     public BoardResponseDto.Post createPost(Long boardId, BoardRequestDto.CreatePost postDto) {
 
-        PostModel post = postRepository.save(postDto.toEntity(boardId));
-        
+        BoardModel board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("Not found Board."));
+
+        PostModel post = postRepository.save(postDto.toEntity(board));
+
         return BoardResponseDto.Post.builder()
                 .postId(post.getPostId())
                 .postTitle(post.getPostTitle())
