@@ -62,3 +62,15 @@ Accept: application/json
 ### 05-delete-board
 DELETE {{baseurl}}/boards/10 HTTP/1.1
 Accept: application/json
+
+
+### 06-create-post
+POST {{baseurl}}/boards/1/posts HTTP/1.1
+Content-Type: application/json; charset=UTF-8
+Accept: application/json
+
+{
+  "postTitle": "Post1",
+  "postContent": "PostConent1",
+  "postWriter": "Jung"
+}

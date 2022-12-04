@@ -3,6 +3,7 @@ package io.vicevil4.slogging.api.module.controller;
 import io.vicevil4.slogging.api.module.dto.BoardRequestDto;
 import io.vicevil4.slogging.api.module.dto.BoardResponseDto;
 import io.vicevil4.slogging.api.module.service.BoardService;
+import io.vicevil4.slogging.api.module.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ import javax.validation.Valid;
 public class BoardController {
 
     private final BoardService boardService;
+    private final PostService postService;
 
     @RequestMapping(value = "/boards", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BoardResponseDto.BoardList> getBoardList(
@@ -52,5 +54,11 @@ public class BoardController {
     public ResponseEntity<Void> deleteBoard(@PathVariable("boardId") String boardId) {
         boardService.deleteBoard(Long.valueOf(boardId));
         return ResponseEntity.ok(null);
+    }
+
+    @RequestMapping(value = "/boards/{boardId:[0-9]+}/posts", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BoardResponseDto.Post> createPost(@PathVariable("boardId") String boardId
+                                                            , @Valid @RequestBody BoardRequestDto.CreatePost postDto) {
+        return ResponseEntity.ok(postService.createPost(Long.valueOf(boardId), postDto));
     }
 }
